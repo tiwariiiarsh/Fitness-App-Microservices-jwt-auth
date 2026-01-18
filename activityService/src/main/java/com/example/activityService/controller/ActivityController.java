@@ -20,13 +20,18 @@ public class ActivityController {
     private ActivityService activityService;
 
     @PostMapping("")
-    public ResponseEntity<ActivityResponse> trackActivity(@RequestBody ActivityRequest request){
-//        ,@RequestHeader ("X-User-ID") String userId
-//        if (userId !=null){
-//            request.setUserId(userId);
-//        }
-        return new ResponseEntity<ActivityResponse>(activityService.trackActivity(request), HttpStatus.OK);
+    public ResponseEntity<ActivityResponse> trackActivity(
+            @RequestBody ActivityRequest request,
+            @RequestHeader("X-User-ID") String userId
+    ){
+        if (userId == null || userId.equals("undefined")) {
+            throw new RuntimeException("UserId missing in header");
+        }
+
+        request.setUserId(userId);
+        return ResponseEntity.ok(activityService.trackActivity(request));
     }
+
 
     @GetMapping("")
     public ResponseEntity<List<ActivityResponse>> getUserActivities(@RequestHeader("X-User-ID") String userId){

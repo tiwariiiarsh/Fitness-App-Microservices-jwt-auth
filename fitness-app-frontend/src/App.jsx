@@ -9,9 +9,10 @@ import ActivityForm from "./components/ActivityForm";
 import ActivityList from "./components/ActivityList";
 
 const ActivityPage = () => {
+  const [refresh, setRefresh] = useState(false);
+
   return (
     <Box
-      component="section"
       sx={{
         p: 2,
         border: "1px solid grey",
@@ -20,11 +21,12 @@ const ActivityPage = () => {
         margin: "20px auto",
       }}
     >
-      <ActivityForm onActivitiesAdded={() => window.location.reload()} />
-      <ActivityList />
+      <ActivityForm onActivitiesAdded={() => setRefresh(!refresh)} />
+      <ActivityList refresh={refresh} />
     </Box>
   );
 };
+
 
 function App() {
   const { token, tokenData, logIn } = useContext(AuthContext);
@@ -32,11 +34,19 @@ function App() {
   const [authReady, setAuthReady] = useState(false);
 
   useEffect(() => {
-    if (token) {
-      dispatch(setCredentials({ token, user: tokenData }));
-      setAuthReady(true);
-    }
-  }, [token, tokenData, dispatch]);
+  if (token && tokenData) {
+    const userId = tokenData.sub; // ✅ Keycloak user UUID
+
+    dispatch(
+      setCredentials({
+        token,
+        user: tokenData,
+        userId,   // 🔥 VERY IMPORTANT
+      })
+    );
+  }
+}, [token, tokenData, dispatch]);
+
 
   if (!token) {
     return (

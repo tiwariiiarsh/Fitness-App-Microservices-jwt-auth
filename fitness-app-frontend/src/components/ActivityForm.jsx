@@ -20,7 +20,7 @@ const ActivityForm = ({ onActivitiesAdded }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addActivity(activity);
+      const response = await addActivity(activity);
       onActivitiesAdded();
       setActivity({
         type: "RUNNING",
@@ -28,6 +28,7 @@ const ActivityForm = ({ onActivitiesAdded }) => {
         caloriesBurned: "",
         additionalMetrices: {},
       });
+        console.log("API Response 👉", response.data); // 👈 ab dikhega
     } catch (error) {
       console.error("Error adding activity:", error);
     }
