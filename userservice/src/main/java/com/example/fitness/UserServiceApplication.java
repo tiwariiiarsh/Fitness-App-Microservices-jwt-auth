@@ -2,6 +2,7 @@ package com.example.fitness;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 //eureka ---> cloud server  h
 // user,Activity etc --->> service h
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // 3-->then cloud server version lenge usko java version ke neeche insert krenge sath me
 
 @SpringBootApplication
+@EnableDiscoveryClient
 public class UserServiceApplication {
 
 	public static void main(String[] args) {

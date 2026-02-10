@@ -11,6 +11,7 @@
         <module name="eureka" />
         <module name="configServer" />
         <module name="gateway" />
+        <module name="ai-service" />
       </profile>
       <profile name="Annotation profile for fitness-microservices" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -29,6 +30,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ai-service" options="-parameters" />
       <module name="aiservice" options="-parameters" />
       <module name="com.fitness" options="-parameters" />
       <module name="com.fitness (1)" options="-parameters" />

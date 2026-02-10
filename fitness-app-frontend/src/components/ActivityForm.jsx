@@ -1,15 +1,14 @@
 import {
+  Button,
   Card,
   CardContent,
-  Typography,
-  TextField,
-  Select,
   MenuItem,
-  Button,
-  Box,
+  Select,
+  TextField,
+  Typography
 } from "@mui/material";
 import { useState } from "react";
-import { addActivity } from "../services/api";
+import api from "../services/api";
 
 const ActivityForm = ({ onActivitiesAdded }) => {
   const [activity, setActivity] = useState({
@@ -20,37 +19,24 @@ const ActivityForm = ({ onActivitiesAdded }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await addActivity(activity);
-    onActivitiesAdded();
+
+    await api.post("/activities", activity); // ✅ FIX HERE
+
+    onActivitiesAdded?.(); // safe call
     setActivity({ type: "RUNNING", duration: "", caloriesBurned: "" });
   };
 
   return (
-    <Card
-      sx={{
-        borderRadius: 4,
-        background: "rgba(255,255,255,0.12)",
-        backdropFilter: "blur(10px)",
-        color: "white",
-        marginBottom: 10,
-      }}
-    >
+    <Card sx={{ borderRadius: 4, marginBottom: 10 }}>
       <CardContent>
-        <Typography
-        fontFamily="'Poppins', sans-serif"
-        variant="h4"
-        fontWeight={700}
-        color="Black"
-        mb={2}
-      >
-       <p style={{ color: "black" }}>➕ Add Activity</p>
-      </Typography>
-      
+        <Typography variant="h4" fontWeight={700} mb={2}>
+          ➕ Add Activity
+        </Typography>
 
         <Select
           fullWidth
           value={activity.type}
-          sx={{ mb: 2, bgcolor: "white", borderRadius: 2 }}
+          sx={{ mb: 2, bgcolor: "white" }}
           onChange={(e) =>
             setActivity({ ...activity, type: e.target.value })
           }
@@ -64,7 +50,7 @@ const ActivityForm = ({ onActivitiesAdded }) => {
           fullWidth
           label="Duration (min)"
           type="number"
-          sx={{ mb: 2, bgcolor: "white", borderRadius: 2 }}
+          sx={{ mb: 2, bgcolor: "white" }}
           value={activity.duration}
           onChange={(e) =>
             setActivity({ ...activity, duration: e.target.value })
@@ -75,24 +61,14 @@ const ActivityForm = ({ onActivitiesAdded }) => {
           fullWidth
           label="Calories"
           type="number"
-          sx={{ mb: 3, bgcolor: "white", borderRadius: 2 }}
+          sx={{ mb: 3, bgcolor: "white" }}
           value={activity.caloriesBurned}
           onChange={(e) =>
             setActivity({ ...activity, caloriesBurned: e.target.value })
           }
         />
 
-        <Button
-          fullWidth
-          size="large"
-          variant="contained"
-          onClick={handleSubmit}
-          sx={{
-            borderRadius: 3,
-            py: 1.2,
-            background: "linear-gradient(135deg,#ff512f,#dd2476)",
-          }}
-        >
+        <Button fullWidth variant="contained" onClick={handleSubmit}>
           Save Activity
         </Button>
       </CardContent>

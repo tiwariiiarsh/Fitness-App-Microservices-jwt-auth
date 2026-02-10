@@ -5,6 +5,10 @@ spring:
   application:
     name: USER-SERVICE
 
+#  jwt:
+#    secret: mySecretKey123912738aopsgjnspkmndfsopkvajoirjg94gf2opfng2mo
+
+
 
 
   config:

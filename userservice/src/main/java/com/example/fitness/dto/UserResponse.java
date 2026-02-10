@@ -1,16 +1,20 @@
 package com.example.fitness.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserResponse {
+    @Getter
     private String id;
-    private String keycloakId;
     private String email;
-    private String password;
-    private String firstName;
-    private String lastName;
+    private String userName;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt ;
+
 }

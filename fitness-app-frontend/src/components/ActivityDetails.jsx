@@ -24,34 +24,28 @@ const ActivityDetail = () => {
   if (!activity) return <Typography>Loading...</Typography>;
 
   return (
-   <Box sx={{ maxWidth: 900, mx: "auto", mt: 5 }}>
-  <Card elevation={10} sx={{ borderRadius: 4 }}>
-    <CardContent sx={{ p: 4 }}>
-      <Typography
-        variant="h4" 
-        color="Black"
-      fontWeight={800} 
-      gutterBottom>
-        🧠 AI Activity Report
-      </Typography>
+    <Box sx={{ maxWidth: 900, mx: "auto", mt: 5 }}>
+      <Card elevation={10}>
+        <CardContent>
+          <Typography variant="h4" fontWeight={800}>
+            🧠 AI Activity Report
+          </Typography>
 
-      <Typography>🏃 {activity.type}</Typography>
-      <Typography>⏱ {activity.duration} min</Typography>
-      <Typography>🔥 {activity.caloriesBurned} kcal</Typography>
+          <Typography>🏃 {activity.type}</Typography>
+          <Typography>⏱ {activity.duration} min</Typography>
+          <Typography>🔥 {activity.caloriesBurned} kcal</Typography>
 
-      <Divider sx={{ my: 3 }} />
+          <Divider sx={{ my: 3 }} />
 
-      <Typography variant="h5" padding={1}>📊 Analysis</Typography>
-      <Typography>{activity.recommendation}</Typography>
+          <Typography variant="h5">📊 Analysis</Typography>
+          <Typography>{activity.recommendation}</Typography>
 
-      <Section title="🚀 Improvements" padding={1} items={activity.improvements} />
-      
-      <Section title="💡 Suggestions" items={activity.suggestions} />
-      <Section title="⚠ Safety Tips" items={activity.safety} />
-    </CardContent>
-  </Card>
-</Box>
-
+          <Section title="🚀 Improvements" items={activity.improvements} />
+          <Section title="💡 Suggestions" items={activity.suggestions} />
+          <Section title="⚠ Safety Tips" items={activity.safety} />
+        </CardContent>
+      </Card>
+    </Box>
   );
 };
 
