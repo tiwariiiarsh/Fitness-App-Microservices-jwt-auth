@@ -2,7 +2,7 @@ spring:
   application:
     name: AI-SERVICE
   config:
-    import: optional:configserver:http://localhost:9999
+    import: optional:configserver:http://configserver:9999
 
 #  rabbitmq:
 #    # RabbitMQ server connection details
