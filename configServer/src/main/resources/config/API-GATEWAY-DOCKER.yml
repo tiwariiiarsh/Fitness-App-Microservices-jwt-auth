@@ -1,0 +1,57 @@
+spring:
+  application:
+    name: API-GATEWAY
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+          - id: user-service
+            uri: lb://USER-SERVICE
+            predicates:
+              - Path=/api/users/**
+            filters:
+              - AuthenticationFilter
+
+          - id: activity-service
+            uri: lb://ACTIVITY-SERVICE
+            predicates:
+              - Path=/api/activities/**
+            filters:
+              - AuthenticationFilter
+
+          - id: ai-service
+            uri: lb://AI-SERVICE
+            predicates:
+              - Path=/api/recommendations/**
+            filters:
+              - AuthenticationFilter
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://serverreg:8761/eureka/
+
+#spring:
+#  cloud:
+#    gateway:
+#      globalcors:
+#        corsConfigurations:
+#          '[/**]':
+#            allowedOrigins:
+#              - "http://localhost:5173"
+#            allowedMethods:
+#              - GET
+#              - POST
+#              - PUT
+#              - DELETE
+#              - OPTIONS
+#            allowedHeaders:
+#              - "*"
+#            allowCredentials: true
