@@ -112,10 +112,10 @@ services:
     container_name: aiservice
     ports:
       - "9097:9090"
+    env_file:
+      - .env
     environment:
       - SPRING_PROFILES_ACTIVE=docker
-      - GEMINI_API_URL=${GEMINI_API_URL}
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
     depends_on:
       - mongo
       - rabbitmq

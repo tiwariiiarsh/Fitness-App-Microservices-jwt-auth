@@ -7,5 +7,5 @@ spring:
 
 gemini:
   api:
-    url: ${GEMINI_API_URL:https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent}
-    key: ${GEMINI_API_KEY:AIzaSyDL1Xzpv0SOjsH2YJjxT8TSNLjbpSq2UUM}
+    url: ${GEMINI_API_URL:https}
+    key: ${GEMINI_API_KEY}
