@@ -1,0 +1,23 @@
+server:
+  port: 9096
+
+spring:
+  application:
+    name: activity-service
+
+  data:
+    mongodb:
+      uri: mongodb://arsh:arsh@mongodb:27017/fitnessactivity?authSource=admin
+
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://serverreg:8761/eureka/
