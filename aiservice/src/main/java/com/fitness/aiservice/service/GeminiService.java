@@ -9,10 +9,17 @@ import java.util.Map;
 @Service
 public class GeminiService {
 
-    @Value("${gemini_api_url}")
+
+    @Value("${gemini.api.url}")
     private String GeminiApiUrl;
-    @Value("${gemini_api_key}")
+
+    @Value("${gemini.api.key}")
     private String GeminiApiKey;
+
+//    @Value("${gemini_api_url}")
+//    private String GeminiApiUrl;
+//    @Value("${gemini_api_key}")
+//    private String GeminiApiKey;
     private final WebClient webClient;
 
     public GeminiService(WebClient.Builder webClientBuilder) {

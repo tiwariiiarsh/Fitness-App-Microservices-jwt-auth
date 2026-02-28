@@ -1,0 +1,44 @@
+server:
+  port: 9096
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://mongo:27017/fitnessactivity
+
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://serverreg:8761/eureka/
+
+
+
+
+
+
+#server:
+#  port: 9096
+#
+#spring:
+#  data:
+#    mongodb:
+#      uri: mongodb://mongo:27017/fitnessactivity
+#
+#  rabbitmq:
+#    host: rabbitmq
+#    port: 5672
+#    username: guest
+#    password: guest
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://serverreg:8761/eureka/

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: USER-SERVICE
+    name: ACTIVITY-SERVICE
 
   config:
     import: optional:configserver:http://configserver:9999

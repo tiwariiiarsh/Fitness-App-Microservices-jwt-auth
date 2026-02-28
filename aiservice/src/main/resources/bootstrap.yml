@@ -1,6 +1,6 @@
 spring:
   application:
-    name: USER-SERVICE
+    name: AI-SERVICE
 
   config:
     import: optional:configserver:http://configserver:9999

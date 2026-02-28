@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: USER-SERVICE-TEST
+
+  cloud:
+    config:
+      enabled: false   # 🔥 Config Server disable during tests
+
+  datasource:
+    url: jdbc:h2:mem:userservice_test_db
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password   # Suggested default test password
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+  h2:
+    console:
+      enabled: true

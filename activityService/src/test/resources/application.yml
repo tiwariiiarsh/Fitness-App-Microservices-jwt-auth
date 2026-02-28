@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: ACTIVITY-SERVICE-TEST
+
+  cloud:
+    config:
+      enabled: false   # 🚀 Config Server disable during tests
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/testdb
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+rabbitmq:
+  exchange:
+    name: test.exchange
+  queue:
+    name: test.queue
+  routing:
+    key: test.key

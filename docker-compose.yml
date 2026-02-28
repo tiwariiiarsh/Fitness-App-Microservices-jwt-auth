@@ -1,0 +1,151 @@
+version: "3.8"
+
+services:
+
+  # -------------------- EUREKA --------------------
+  serverreg:
+    build: ./eureka
+    container_name: serverreg
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    restart: always
+    networks:
+      - fitness-net
+
+  # -------------------- CONFIG SERVER --------------------
+  configserver:
+    build: ./configServer
+    container_name: configserver
+    ports:
+      - "9999:9999"
+    environment:
+      - SPRING_PROFILES_ACTIVE=native
+    depends_on:
+      - serverreg
+    restart: always
+    networks:
+      - fitness-net
+
+  # -------------------- MYSQL --------------------
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Arsh@1106
+      MYSQL_DATABASE: fitness_user_db
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+    restart: always
+    networks:
+      - fitness-net
+
+  # -------------------- MONGODB --------------------
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    restart: always
+    networks:
+      - fitness-net
+
+  # -------------------- RABBITMQ --------------------
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    restart: always
+    networks:
+      - fitness-net
+
+  # -------------------- USER SERVICE --------------------
+  userservice:
+    build: ./userservice
+    container_name: userservice
+    ports:
+      - "9095:9095"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      mysql:
+        condition: service_healthy
+      serverreg:
+        condition: service_started
+      configserver:
+        condition: service_started
+    restart: always
+    networks:
+      - fitness-net
+
+  # -------------------- ACTIVITY SERVICE --------------------
+  activityservice:
+    build: ./activityService
+    container_name: activityservice
+    ports:
+      - "9096:9096"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - mongo
+      - rabbitmq
+      - serverreg
+      - configserver
+    restart: always
+    networks:
+      - fitness-net
+
+  # -------------------- AI SERVICE --------------------
+  aiservice:
+    build: ./aiservice
+    container_name: aiservice
+    ports:
+      - "9097:9090"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - GEMINI_API_URL=${GEMINI_API_URL}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    depends_on:
+      - mongo
+      - rabbitmq
+      - serverreg
+      - configserver
+    restart: always
+    networks:
+      - fitness-net
+
+  # -------------------- API GATEWAY --------------------
+  apigateway:
+    build: ./gateway
+    container_name: apigateway
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - userservice
+      - activityservice
+      - aiservice
+      - serverreg
+    restart: always
+    networks:
+      - fitness-net
+
+networks:
+  fitness-net:
+    driver: bridge
+
+volumes:
+  mysql-data:
+  mongo-data:
